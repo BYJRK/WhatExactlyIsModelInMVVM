@@ -1,0 +1,37 @@
+﻿@page "/"
+@using BlazorDemo.Models
+@using BlazorDemo.Repositories
+@inject ProductRepository repo
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<h2>Product List</h2>
+
+<div class="row">
+    @foreach (var product in Products)
+    {
+        <div class="col-sm-4">
+            <div class="card m-2">
+                <div class="card-body">
+                    <h5 class="card-title">@product.Title</h5>
+                    <p class="card-text">@product.Description</p>
+                    <a href="@product.Url" target="_blank" class="btn btn-primary">Details</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code
+{
+    public List<Product>? Products { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Products = repo.GetProducts().ToList();
+    }
+}
